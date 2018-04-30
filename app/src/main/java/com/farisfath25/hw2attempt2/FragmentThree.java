@@ -127,7 +127,6 @@ public class FragmentThree extends Fragment{
 
                         newsList.add(new contentItem(title,url));
 
-                        progressDialog.dismiss();
                     }
                 }
                 catch (IOException e)
@@ -141,6 +140,9 @@ public class FragmentThree extends Fragment{
                     public void run()
                     {
                         //content.setText(builder.toString());
+
+                        progressDialog.dismiss();
+
                         newsAdapter= new CustomAdapter(newsList,getActivity().getApplicationContext());
                         listView.setAdapter(newsAdapter);
                     }

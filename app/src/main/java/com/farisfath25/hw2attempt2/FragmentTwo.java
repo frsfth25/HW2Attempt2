@@ -16,6 +16,8 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import org.jsoup.Connection;
+import org.jsoup.Connection.Response;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -112,7 +114,6 @@ public class FragmentTwo extends Fragment{
                 {
                     Document doc = Jsoup.connect("http://www.ybu.edu.tr/muhendislik/bilgisayar/").get();
 
-                    //String title = doc.title();
                     Elements annLinks = doc.select("div.contentAnnouncements div.caContent div.cncItem a");
 
                     //builder.append(title).append("\n");
@@ -126,8 +127,6 @@ public class FragmentTwo extends Fragment{
                         String url = annLink.absUrl("href");
 
                         annList.add(new contentItem(title,url));
-
-                        progressDialog.dismiss();
                     }
                 }
                 catch (IOException e)
@@ -141,6 +140,8 @@ public class FragmentTwo extends Fragment{
                     public void run()
                     {
                         //content.setText(builder.toString());
+
+                        progressDialog.dismiss();
 
                         annAdapter= new CustomAdapter(annList,getActivity().getApplicationContext());
                         listView.setAdapter(annAdapter);
