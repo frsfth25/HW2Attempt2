@@ -45,11 +45,10 @@ public class FragmentOne extends Fragment {
         act = getActivity();
 
         //elements added
-        //textView = v.findViewById(R.id.txtView);
+        textView = v.findViewById(R.id.txtView);
 
 		getFood();
-		
-        // Inflate the layout for this fragment
+
         return v;
     }
 
