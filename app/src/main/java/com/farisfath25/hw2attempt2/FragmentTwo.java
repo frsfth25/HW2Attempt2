@@ -24,7 +24,7 @@ import org.jsoup.select.Elements;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class FragmentTwo extends Fragment implements AdapterView.OnItemLongClickListener{
+public class FragmentTwo extends Fragment{
 
     private Activity act;
     private View v;
@@ -32,6 +32,7 @@ public class FragmentTwo extends Fragment implements AdapterView.OnItemLongClick
     private ListView listView;
     private ArrayList<contentItem> annList;
     private CustomAdapter annAdapter;
+    private ProgressDialog progressDialog;
 
     public FragmentTwo() {
         // Required empty public constructor
@@ -85,18 +86,7 @@ public class FragmentTwo extends Fragment implements AdapterView.OnItemLongClick
 
         annList = new ArrayList<>();
 
-        final ProgressDialog dialog = ProgressDialog.show(v.getContext(), "", "Announcements list is being fetched,,,",
-                true);
-        dialog.show();
 
-        Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            public void run() {
-                dialog.dismiss();
-            }
-        }, 3000); // 3000 milliseconds delay
-
-        dialog.dismiss();
 
         getAnnouncements();
 
@@ -131,6 +121,8 @@ public class FragmentTwo extends Fragment implements AdapterView.OnItemLongClick
                         String url = annLink.absUrl("href");
 
                         annList.add(new contentItem(title,url));
+
+
                     }
                 }
                 catch (IOException e)
@@ -151,25 +143,6 @@ public class FragmentTwo extends Fragment implements AdapterView.OnItemLongClick
             }
         }).start();
 
-
     }
 
-    /**
-     * Callback method to be invoked when an item in this view has been
-     * clicked and held.
-     * <p>
-     * Implementers can call getItemAtPosition(position) if they need to access
-     * the data associated with the selected item.
-     *
-     * @param parent   The AbsListView where the click happened
-     * @param view     The view within the AbsListView that was clicked
-     * @param position The position of the view in the list
-     * @param id       The row id of the item that was clicked
-     * @return true if the callback consumed the long click, false otherwise
-     */
-    @Override
-    public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-
-        return false;
-    }
-}
+  }
