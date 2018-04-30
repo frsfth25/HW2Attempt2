@@ -61,7 +61,7 @@ public class FragmentTwo extends Fragment{
                 final int index = position;
 
                 new AlertDialog.Builder(v.getContext())
-                        .setMessage("Open the Announcement link on your default browser?")
+                        .setMessage("Open the Announcements link on your default browser?")
                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                             String url;
                             Uri uri;
@@ -86,8 +86,6 @@ public class FragmentTwo extends Fragment{
 
         annList = new ArrayList<>();
 
-
-
         getAnnouncements();
 
         return v;
@@ -95,6 +93,13 @@ public class FragmentTwo extends Fragment{
 
     private void getAnnouncements()
     {
+        progressDialog = new ProgressDialog(v.getContext());
+        progressDialog.setMessage("Loading..."); // Setting Message
+        progressDialog.setTitle("Progress Dialog"); // Setting Title
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER); // Progress Dialog Style Spinner
+        progressDialog.show(); // Display Progress Dialog
+        progressDialog.setCancelable(false);
+
         //getAnnouncements operation
         new Thread(new Runnable()
         {
@@ -122,7 +127,7 @@ public class FragmentTwo extends Fragment{
 
                         annList.add(new contentItem(title,url));
 
-
+                        progressDialog.dismiss();
                     }
                 }
                 catch (IOException e)
@@ -136,6 +141,7 @@ public class FragmentTwo extends Fragment{
                     public void run()
                     {
                         //content.setText(builder.toString());
+
                         annAdapter= new CustomAdapter(annList,getActivity().getApplicationContext());
                         listView.setAdapter(annAdapter);
                     }

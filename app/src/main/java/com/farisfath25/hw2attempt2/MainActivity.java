@@ -1,9 +1,11 @@
 package com.farisfath25.hw2attempt2;
 
+import android.content.DialogInterface;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.FrameLayout;
@@ -21,6 +23,7 @@ Resources:
 - https://www.journaldev.com/10416/android-listview-with-custom-adapter-example-tutorial
 - https://stackoverflow.com/questions/29743535/android-listview-onclick-open-a-website
 - http://wptrafficanalyzer.in/blog/item-long-click-handler-for-listfragment-in-android/
+- http://abhiandroid.com/ui/progressdialog
  */
 
 public class MainActivity extends AppCompatActivity {
@@ -56,6 +59,13 @@ public class MainActivity extends AppCompatActivity {
         //thirdTab.setIcon(R.drawable.ic_launcher_foreground); // set an icon for the first tab
         tabLayout.addTab(thirdTab); // add  the tab at in the TabLayout
 
+        Fragment fragment = new FragmentOne();
+        FragmentManager fm = getSupportFragmentManager();
+        FragmentTransaction ft = fm.beginTransaction();
+        ft.replace(R.id.simpleFrameLayout, fragment);
+        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+        ft.commit();
+
         // perform setOnTabSelectedListener event on TabLayout
         tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
@@ -90,6 +100,24 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        new AlertDialog.Builder(this)
+                .setIcon(android.R.drawable.ic_lock_power_off)
+                .setMessage("Exit the application?")
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        finish();
+
+                        int pid = android.os.Process.myPid();
+                        android.os.Process.killProcess(pid);
+                    }
+                })
+                .setNegativeButton("No", null)
+                .show();
     }
 
 }

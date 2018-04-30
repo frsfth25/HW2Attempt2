@@ -93,6 +93,13 @@ public class FragmentThree extends Fragment{
 
     private void getNews()
     {
+        progressDialog = new ProgressDialog(v.getContext());
+        progressDialog.setMessage("Loading..."); // Setting Message
+        progressDialog.setTitle("Progress Dialog"); // Setting Title
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER); // Progress Dialog Style Spinner
+        progressDialog.show(); // Display Progress Dialog
+        progressDialog.setCancelable(false);
+
         //getAnnouncements operation
         new Thread(new Runnable()
         {
@@ -120,6 +127,7 @@ public class FragmentThree extends Fragment{
 
                         newsList.add(new contentItem(title,url));
 
+                        progressDialog.dismiss();
                     }
                 }
                 catch (IOException e)
